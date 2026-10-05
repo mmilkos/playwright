@@ -6,11 +6,7 @@ export const step = async (title: string, body: (step: TestStepInfo) => any ) =>
 
 export const login = async(request: APIRequestContext, context: BrowserContext )=>{
     const url = process.env.BASE_URL;
-
-    const response = await request.get('/login');
-
-    const htmlText = await response.text();
-    const csrfToken = htmlText.match(/name="csrf_token"\s+value="([^"]+)"/)[1];
+    const csrfToken = await getCsrfToken(request);
 
     await request.post('/login', {
         form: {
@@ -28,4 +24,29 @@ export const login = async(request: APIRequestContext, context: BrowserContext )
     if (storageState.cookies.length === 0) throw new Error('API login failed');
 
     await context.addCookies(storageState.cookies)
+}
+
+export const generateUniqueString = (prefix: string = ''): string =>{
+    const now = Date.now();
+    return `${prefix}-${now}`;
+}
+
+export const deletePost = async(request: APIRequestContext, title: string) =>{
+    const url = `${process.env.BASE_URL}/article/${title}/delete`;
+    const csrfToken = await getCsrfToken(request);
+
+    await request.post(url, {
+        form: {
+            csrf_token: csrfToken
+        }
+    });
+}
+
+export const getCsrfToken = async (request: APIRequestContext): Promise<string>=>{
+    const response = await request.get('/login');
+
+    const htmlText = await response.text();
+    const csrfToken = htmlText.match(/name="csrf_token"\s+value="([^"]+)"/)[1];
+
+    return csrfToken;
 }

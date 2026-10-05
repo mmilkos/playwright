@@ -1,4 +1,5 @@
 import {Locator, Page} from "@playwright/test";
+import {step} from "./helpers";
 
 export class NavbarComponent{
     readonly page: Page;
@@ -17,5 +18,18 @@ export class NavbarComponent{
         this.newArticleBtn = this.page.getByRole('link', {name: 'New Article'});
         this.settingsBtn = this.page.getByRole('link', {name: 'Settings'});
         this.userProfileBtn = this.page.getByTitle('User Profile');
+    }
+
+    async goToSignInPage(){
+        await step('Click on Sign In btn', async ()=>{
+            await this.page.goto('');
+            await this.signInBtn.click();
+        })
+    }
+
+    async goToNewArticlePage(){
+        await step('Click on New Article button', async ()=>{
+            await this.newArticleBtn.click();
+        })
     }
 }

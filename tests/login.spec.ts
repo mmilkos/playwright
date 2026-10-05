@@ -7,7 +7,7 @@ test('Login with valid credentials -> successful login', async ({ page })=>{
     const homePage: HomePage = new HomePage(page);
     const signInPage: SignInPage = new SignInPage(page);
 
-    await homePage.goToLoginPage();
+    await homePage.navbar.goToSignInPage();
     await signInPage.signIn();
 
     await step('Verify new article button visibility', async ()=> await expect(homePage.navbar.newArticleBtn).toBeVisible());
