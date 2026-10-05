@@ -1,27 +1,30 @@
 import {expect, test} from '../fixtures/baseTest'
-import {deletePost, generateUniqueString, step} from "../utils/helpers";
+import {step} from "../utils/helpers";
 import {HomePage} from "../pages/home-page";
-import {NewArticlePage} from "../pages/new-article-page";
+import {EditArticlePage} from "../pages/edit-article-page";
 import {ArticleData} from "../types/types";
 import {ArticlePage} from "../pages/article-page";
+import {faker} from "@faker-js/faker";
 
-const tag = generateUniqueString();
+const tag = faker.lorem.word();
 
 const articleData: ArticleData = {
-   title: generateUniqueString('title'),
-   description: generateUniqueString('description'),
-   body: generateUniqueString('body'),
+   title: faker.string.uuid(),
+   description: faker.lorem.sentence(),
+   body: faker.lorem.paragraphs(5),
    tags: [tag]
 }
 
-test('Create new article -> new article created', async({page}) =>{
+test('Create new article -> new article created', async({page, articleWithCleanup}) =>{
+   articleWithCleanup.title = articleData.title;
+
    const homePage: HomePage = new HomePage(page);
    await homePage.navbar.goToNewArticlePage();
 
-   const newArticlePage: NewArticlePage = new NewArticlePage(page);
+   const editArticlePage: EditArticlePage = new EditArticlePage(page);
 
-   await newArticlePage.fillNewArticleForm(articleData);
-   await newArticlePage.clickOnPublishArticle();
+   await editArticlePage.fillArticleForm(articleData);
+   await editArticlePage.clickOnPublishArticle();
 
    const articlePage: ArticlePage = new ArticlePage(page);
 
@@ -31,11 +34,7 @@ test('Create new article -> new article created', async({page}) =>{
 
    await step('Check article data', async() =>{
          await expect(articlePage.articleTitle).toHaveText(articleData.title);
-         await expect(articlePage.articleDesc).toHaveText(articleData.body);
+         await expect(articlePage.articleBody).toHaveText(articleData.body);
          await expect(articlePage.articleAuthor).toHaveText(process.env.USER);
    })
-})
-
-test.afterEach(async({request})=>{
-   await deletePost(request, articleData.title)
 })

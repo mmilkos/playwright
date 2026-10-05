@@ -32,4 +32,10 @@ export class NavbarComponent{
             await this.newArticleBtn.click();
         })
     }
+
+    async goToUserProfilePage(){
+        await step('Click on username button', async() =>{
+            await this.userProfileBtn.click()
+        })
+    }
 }

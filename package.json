@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mmilkos/playwright#readme",
   "devDependencies": {
+    "@faker-js/faker": "^10.6.0",
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.4",
     "dotenv": "^18.0.5"

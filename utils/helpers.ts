@@ -1,4 +1,5 @@
 import {APIRequestContext, BrowserContext, test, TestStepInfo} from "@playwright/test";
+import {ArticleData} from "../types/types";
 
 export const step = async (title: string, body: (step: TestStepInfo) => any ) => {
     await test.step(title, body);
@@ -26,9 +27,19 @@ export const login = async(request: APIRequestContext, context: BrowserContext )
     await context.addCookies(storageState.cookies)
 }
 
-export const generateUniqueString = (prefix: string = ''): string =>{
-    const now = Date.now();
-    return `${prefix}-${now}`;
+export const createPost = async(request: APIRequestContext, article: ArticleData) =>{
+    const url = `${process.env.BASE_URL}/editor`;
+    const csrfToken = await getCsrfToken(request);
+
+    await request.post(url, {
+        form: {
+            title: article.title,
+            description: article.description,
+            body: article.body,
+            tags: article.tags.join(','),
+            csrf_token: csrfToken
+        }
+    })
 }
 
 export const deletePost = async(request: APIRequestContext, title: string) =>{
