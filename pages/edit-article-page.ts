@@ -4,29 +4,38 @@ import {ArticleData} from "../types/types";
 import {step} from "../utils/helpers";
 
 export class EditArticlePage extends BasePage{
-    readonly title: Locator;
-    readonly description: Locator;
-    readonly body: Locator;
-    readonly tags: Locator;
-    readonly publishBtn: Locator;
+    readonly article: {
+        readonly title: Locator;
+        readonly description: Locator;
+        readonly body: Locator;
+        readonly tags: Locator;
+    }
+
+    readonly buttons: {
+        readonly publish: Locator;
+    }
 
     constructor(page:Page) {
         super(page);
+        this.article = {
+            title:  this.page.locator('input[name="title"]'),
+            description: this.page.locator('input[name="description"]'),
+            body: this.page.locator('textarea[name="body"]'),
+            tags: this.page.getByPlaceholder('Enter tags'),
+        }
 
-        this.title = this.page.locator('input[name="title"]');
-        this.description = this.page.locator('input[name="description"]');
-        this.body = this.page.locator('textarea[name="body"]');
-        this.tags = this.page.getByPlaceholder('Enter tags');
-        this.publishBtn = this.page.getByRole('button', {name: 'Publish Article'})
+        this.buttons = {
+            publish: this.page.getByRole('button', {name: 'Publish Article'}),
+        }
     }
 
      async fillArticleForm(formData: ArticleData){
         await step('Fill article form', async () =>{
-            await this.title.fill(formData.title);
-            await this.description.fill(formData.description);
-            await this.body.fill(formData.body);
-            for (const tag of formData.tags) {
-                await this.tags.fill(tag);
+            await this.article.title.fill(formData.title);
+            await this.article.description.fill(formData.description);
+            await this.article.body.fill(formData.body);
+            for (const tag of formData.tagList) {
+                await this.article.tags.fill(tag);
                 await this.page.keyboard.press('Enter');
             }
         })
@@ -34,7 +43,7 @@ export class EditArticlePage extends BasePage{
 
      async clickOnPublishArticle() {
         await step('Click on publish article', async ()=>{
-            await this.publishBtn.click();
+            await this.buttons.publish.click();
         })
      }
 }

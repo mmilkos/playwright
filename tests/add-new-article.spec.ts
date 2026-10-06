@@ -12,29 +12,27 @@ const articleData: ArticleData = {
    title: faker.string.uuid(),
    description: faker.lorem.sentence(),
    body: faker.lorem.paragraphs(5),
-   tags: [tag]
+   tagList: [tag]
 }
 
 test('Create new article -> new article created', async({page, articleWithCleanup}) =>{
    articleWithCleanup.title = articleData.title;
-
    const homePage: HomePage = new HomePage(page);
-   await homePage.navbar.goToNewArticlePage();
-
    const editArticlePage: EditArticlePage = new EditArticlePage(page);
+   const articlePage: ArticlePage = new ArticlePage(page);
+
+   await homePage.navbar.goToNewArticlePage();
 
    await editArticlePage.fillArticleForm(articleData);
    await editArticlePage.clickOnPublishArticle();
-
-   const articlePage: ArticlePage = new ArticlePage(page);
 
    await step('Check url after publishing', async () =>{
       await expect(page).toHaveURL(`/article/${articleData.title}`);
    })
 
    await step('Check article data', async() =>{
-         await expect(articlePage.articleTitle).toHaveText(articleData.title);
-         await expect(articlePage.articleBody).toHaveText(articleData.body);
-         await expect(articlePage.articleAuthor).toHaveText(process.env.USER);
+         await expect(articlePage.article.title).toHaveText(articleData.title);
+         await expect(articlePage.article.body).toHaveText(articleData.body);
+         await expect(articlePage.article.author).toHaveText(process.env.USER);
    })
 })

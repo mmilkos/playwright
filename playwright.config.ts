@@ -10,10 +10,10 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 1,
-  workers: 2,
+  workers: 1,
   reporter: 'html',
   use: {
-    baseURL: process.env.BASE_URL || 'https://realworld.app.is/',
+    baseURL: process.env.BASE_URL || 'https://demo.realworld.show/',
     trace: 'retain-on-failure-and-retries',
     channel: 'chrome',
     headless: true

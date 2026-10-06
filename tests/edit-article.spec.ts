@@ -11,7 +11,7 @@ const articleData: ArticleData = {
     title: faker.string.uuid(),
     description: faker.lorem.sentence(),
     body: faker.lorem.paragraphs(5),
-    tags: []
+    tagList: []
 }
 
 test('Edit new article -> article has new data', async({page, articleCreatedByApi})=>{
@@ -23,7 +23,6 @@ test('Edit new article -> article has new data', async({page, articleCreatedByAp
     await homePage.navbar.goToUserProfilePage();
 
     await step('Check if article was created', async () =>{
-        await expect(userProfilePage.articles.filter({hasText: articleCreatedByApi.title})).toBeVisible();
         await expect(userProfilePage.articles.filter({hasText: articleCreatedByApi.title})).toHaveCount(1);
     })
 
@@ -35,8 +34,10 @@ test('Edit new article -> article has new data', async({page, articleCreatedByAp
     await editArticlePage.clickOnPublishArticle();
 
     await step('Check article data', async() =>{
-        await expect(articlePage.articleTitle).toHaveText(articleData.title);
-        await expect(articlePage.articleBody).toHaveText(articleData.body);
-        await expect(articlePage.articleAuthor).toHaveText(process.env.USER);
+        await expect(articlePage.article.title).toHaveText(articleData.title);
+        await expect(articlePage.article.body).toHaveText(articleData.body);
+        await expect(articlePage.article.author).toHaveText(process.env.USER);
     })
+
+    articleCreatedByApi.title = articleData.title;
 })

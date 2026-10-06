@@ -9,4 +9,9 @@ export abstract class BasePage{
         this.page = page;
         this.navbar = new NavbarComponent(page);
     }
+
+    async waitForResponse(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, code: number = 200){
+       return  await this.page.waitForResponse((response) => response.url().includes(url) && response.status() == code &&
+            response.request().method() === method)
+    }
 }
