@@ -1,5 +1,5 @@
 import {Locator, Page} from "@playwright/test";
-import {step} from "./helpers";
+import {step} from "@/utils/helpers";
 
 export class NavbarComponent{
     readonly page: Page;

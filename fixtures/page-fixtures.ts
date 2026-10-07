@@ -1,9 +1,9 @@
 import { test as base } from '@playwright/test';
-import {HomePage} from "../pages/home-page";
-import {ArticlePage} from "../pages/article-page";
-import {EditArticlePage} from "../pages/edit-article-page";
-import {SignInPage} from "../pages/sign-in-page";
-import {UserProfilePage} from "../pages/user-profile-page";
+import {HomePage} from "@/pages/home-page";
+import {ArticlePage} from "@/pages/article-page";
+import {EditArticlePage} from "@/pages/edit-article-page";
+import {SignInPage} from "@/pages/sign-in-page";
+import {UserProfilePage} from "@/pages/user-profile-page";
 
 export const test = base.extend<{homePage: HomePage, articlePage: ArticlePage,
     editArticlePage: EditArticlePage, signInPage: SignInPage, userProfilePage: UserProfilePage}>({

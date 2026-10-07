@@ -1,5 +1,5 @@
 import { Page } from "@playwright/test";
-import {NavbarComponent} from "../utils/navbarComponent";
+import {NavbarComponent} from "@/utils/navbarComponent";
 
 export abstract class BasePage{
     readonly page: Page;

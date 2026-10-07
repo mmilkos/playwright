@@ -1,6 +1,6 @@
 import {Locator, Page} from "@playwright/test";
-import {BasePage} from "./base-page";
-import {step} from "../utils/helpers";
+import {BasePage} from "@/pages/base-page";
+import {step} from "@/utils/helpers";
 
 export class SignInPage extends BasePage{
 
@@ -27,8 +27,8 @@ export class SignInPage extends BasePage{
 
     public async signIn(){
         await step('Fill email and password and continue', async() => {
-            await this.inputs.email.fill(process.env.USER_EMAIL);
-            await this.inputs.password.fill(process.env.USER_PASSWORD);
+            await this.inputs.email.fill(process.env.USER_EMAIL!);
+            await this.inputs.password.fill(process.env.USER_PASSWORD!);
             await this.buttons.signIn.click();
         })
     }

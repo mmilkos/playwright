@@ -1,6 +1,6 @@
-import {BasePage} from "./base-page";
+import {BasePage} from "@/pages/base-page";
 import {Locator, Page} from "@playwright/test";
-import {step} from "../utils/helpers";
+import {step} from "@/utils/helpers";
 
 export class UserProfilePage extends BasePage{
     readonly articles: Locator;

@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
-import {test as base} from './page-fixtures'
-import {createPost, deletePost, login} from "../utils/helpers";
-import {ArticleData} from "../types/types";
+import {test as base} from '@/fixtures/page-fixtures'
+import {createPost, deletePost, envCheck, login} from "@/utils/helpers";
+import {ArticleData} from "@/types/types";
 import {faker} from "@faker-js/faker";
 
 type CustomFixtures = {
@@ -13,6 +13,7 @@ type CustomFixtures = {
 
 export const test = base.extend<CustomFixtures>({
     token: async ({ request, context }, use) => {
+        envCheck()
         const token = await login(request, context);
         await use(token);
     },

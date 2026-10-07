@@ -1,6 +1,6 @@
 import {expect} from "@playwright/test";
-import {step} from "../utils/helpers";
-import {test} from '../fixtures/page-fixtures'
+import {step} from "@/utils/helpers";
+import {test} from '@/fixtures/page-fixtures'
 
 test('Login with valid credentials -> successful login', async ({ homePage, signInPage })=>{
     await homePage.navbar.goToSignInPage();

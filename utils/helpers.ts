@@ -1,5 +1,6 @@
-import {APIRequestContext, BrowserContext, test, TestStepInfo} from "@playwright/test";
-import {ArticleData, LoginData, LoginResponse} from "../types/types";
+import {APIRequestContext, BrowserContext, TestStepInfo} from "@playwright/test";
+import {ArticleData, LoginData, LoginResponse} from "@/types/types";
+import {test} from "@/fixtures/baseTest";
 
 export const step = async (title: string, body: (step: TestStepInfo) => any ) => {
     await test.step(title, body);
@@ -9,8 +10,8 @@ export const login = async(request: APIRequestContext, context: BrowserContext) 
     const url = `${process.env.API_URL}/users/login`;
 
     const loginData : LoginData = {
-        email: process.env.USER_EMAIL,
-        password: process.env.USER_PASSWORD
+        email: process.env.USER_EMAIL!,
+        password: process.env.USER_PASSWORD!
     }
 
     const response = await request.post(url, {
@@ -24,8 +25,7 @@ export const login = async(request: APIRequestContext, context: BrowserContext) 
     });
 
     if (!response.ok()) {
-        const errorText = await response.text();
-        throw new Error(`Login API request failed [Status ${response.status()}]: ${errorText}`);
+        throw new Error(`Login API request failed [Status ${response.status()}]: ${await response.text()}`);
     }
 
     const loginResponse: LoginResponse = await response.json();
@@ -52,7 +52,7 @@ export const createPost = async(request: APIRequestContext, article: ArticleData
         }
     })
 
-    if(response.status() != 201) throw new Error('Creation failed')
+    if(response.status() != 201) throw new Error(`Creation failed [Status ${response.status()}]: ${await response.text()}`)
 }
 
 export const deletePost = async(request: APIRequestContext, title: string, token: string) =>{
@@ -62,5 +62,12 @@ export const deletePost = async(request: APIRequestContext, title: string, token
             'Authorization': `Token ${token}`
         }});
 
-    if(response.status() != 204) throw new Error('Cleanup failed')
+    if(response.status() != 204) throw new Error(`Cleanup failed [Status ${response.status()}]: ${await response.text()}`)
+}
+
+export const envCheck = ()=>{
+    const requiredEnvVariables = ['BASE_URL', 'API_URL', 'USER_EMAIL', 'USER_PASSWORD', 'USER'];
+    requiredEnvVariables.forEach(v => {
+        if (!process.env[v]) throw new Error(`${v} variable is missing`)
+    })
 }

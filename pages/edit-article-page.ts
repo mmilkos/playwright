@@ -1,7 +1,7 @@
-import {BasePage} from "./base-page";
+import {BasePage} from "@/pages/base-page";
 import {Locator, Page} from "@playwright/test";
-import {ArticleData} from "../types/types";
-import {step} from "../utils/helpers";
+import {ArticleData} from "@/types/types";
+import {step} from "@/utils/helpers";
 
 export class EditArticlePage extends BasePage{
     readonly article: {
