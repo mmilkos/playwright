@@ -1,11 +1,7 @@
 import {expect, test} from "../fixtures/baseTest";
-import {HomePage} from "../pages/home-page";
-import {UserProfilePage} from "../pages/user-profile-page";
 import {step} from "../utils/helpers";
-import {ArticlePage} from "../pages/article-page";
 import {ArticleData} from "../types/types";
 import {faker} from "@faker-js/faker";
-import {EditArticlePage} from "../pages/edit-article-page";
 
 const articleData: ArticleData = {
     title: faker.string.uuid(),
@@ -14,12 +10,7 @@ const articleData: ArticleData = {
     tagList: []
 }
 
-test('Edit new article -> article has new data', async({page, articleCreatedByApi})=>{
-    const homePage: HomePage = new HomePage(page);
-    const userProfilePage: UserProfilePage = new UserProfilePage(page);
-    const articlePage: ArticlePage = new ArticlePage(page);
-    const editArticlePage: EditArticlePage = new EditArticlePage(page);
-
+test('Edit new article -> article has new data', async({homePage, userProfilePage, articlePage, editArticlePage, articleCreatedByApi})=>{
     await homePage.navbar.goToUserProfilePage();
 
     await step('Check if article was created', async () =>{

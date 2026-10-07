@@ -1,4 +1,5 @@
-import { test as base, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
+import {test as base} from './page-fixtures'
 import {createPost, deletePost, login} from "../utils/helpers";
 import {ArticleData} from "../types/types";
 import {faker} from "@faker-js/faker";

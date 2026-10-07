@@ -1,12 +1,8 @@
-import {expect, test} from "@playwright/test";
-import {SignInPage} from "../pages/sign-in-page";
-import {HomePage} from "../pages/home-page";
+import {expect} from "@playwright/test";
 import {step} from "../utils/helpers";
+import {test} from '../fixtures/page-fixtures'
 
-test('Login with valid credentials -> successful login', async ({ page })=>{
-    const homePage: HomePage = new HomePage(page);
-    const signInPage: SignInPage = new SignInPage(page);
-
+test('Login with valid credentials -> successful login', async ({ homePage, signInPage })=>{
     await homePage.navbar.goToSignInPage();
     await signInPage.signIn();
 

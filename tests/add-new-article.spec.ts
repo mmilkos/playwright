@@ -1,9 +1,6 @@
 import {expect, test} from '../fixtures/baseTest'
 import {step} from "../utils/helpers";
-import {HomePage} from "../pages/home-page";
-import {EditArticlePage} from "../pages/edit-article-page";
 import {ArticleData} from "../types/types";
-import {ArticlePage} from "../pages/article-page";
 import {faker} from "@faker-js/faker";
 
 const tag = faker.lorem.word();
@@ -15,12 +12,8 @@ const articleData: ArticleData = {
    tagList: [tag]
 }
 
-test('Create new article -> new article created', async({page, articleWithCleanup}) =>{
+test('Create new article -> new article created', async({page, homePage, editArticlePage, articlePage, articleWithCleanup}) =>{
    articleWithCleanup.title = articleData.title;
-   const homePage: HomePage = new HomePage(page);
-   const editArticlePage: EditArticlePage = new EditArticlePage(page);
-   const articlePage: ArticlePage = new ArticlePage(page);
-
    await homePage.navbar.goToNewArticlePage();
 
    await editArticlePage.fillArticleForm(articleData);
