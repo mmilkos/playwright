@@ -15,6 +15,10 @@ export class EditArticlePage extends BasePage{
         readonly publish: Locator;
     }
 
+    readonly messages: {
+        readonly error: Locator
+    }
+
     constructor(page:Page) {
         super(page);
         this.article = {
@@ -26,6 +30,10 @@ export class EditArticlePage extends BasePage{
 
         this.buttons = {
             publish: this.page.getByRole('button', {name: 'Publish Article'}),
+        }
+
+        this.messages = {
+            error: this.page.getByText('network Unable to connect. Please check your internet connection.')
         }
     }
 
