@@ -8,6 +8,7 @@ E2E tests for the RealWorld App using Playwright.
 4. Clone and install dependencies:
 ```
 git clone https://github.com/mmilkos/playwright.git
+cd playwright
 npm install
 npx playwright install chrome
 ```
