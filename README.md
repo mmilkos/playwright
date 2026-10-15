@@ -3,9 +3,11 @@ E2E tests for the RealWorld App using Playwright.
 
 ## Prerequisites & Setup
 1. Node.js (v20.19.0+)
-2. Register account manually on [demo.realworld.show](https://demo.realworld.show/)
-3. Clone and install dependencies:
+2. Git
+3. Register account manually on [demo.realworld.show](https://demo.realworld.show/)
+4. Clone and install dependencies:
 ```
+git clone https://github.com/mmilkos/playwright.git
 npm install
 npx playwright install chrome
 ```
