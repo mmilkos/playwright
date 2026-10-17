@@ -10,7 +10,7 @@ E2E tests for the RealWorld App using Playwright.
 git clone https://github.com/mmilkos/playwright.git
 cd playwright
 npm install
-npx playwright install chrome
+npm playwright install chrome
 ```
 4. Create a config folder and a .env file inside it (config/.env) with your account details:
 ```
